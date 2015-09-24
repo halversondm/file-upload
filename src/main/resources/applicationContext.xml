@@ -1,0 +1,30 @@
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd">
+    <import resource="classpath:META-INF/cxf/cxf.xml"/>
+    <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
+    <jaxrs:server id="upload" address="/fileUpload">
+        <jaxrs:serviceBeans>
+            <ref bean="fileUpload"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+
+    <bean id="poolingDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/fileupload"/>
+        <property name="username" value="fileup"/>
+        <property name="password" value="fileup"/>
+    </bean>
+
+    <bean id="fileUpload" class="org.dmhweb.controller.FileUpload">
+        <property name="dataSource" ref="poolingDataSource"/>
+    </bean>
+
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="poolingDataSource"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="txManager"/>
+</beans>
