@@ -21,6 +21,7 @@ import java.sql.PreparedStatement;
 public class FileUpload {
 
     private static final Logger LOGGER = LogManager.getLogger(FileUpload.class);
+    private static final String INSERT = "INSERT INTO FILE_TABLE (FILE_NAME, FILE_DATA) VALUES (?,?)";
 
     private DataSource dataSource;
 
@@ -32,11 +33,13 @@ public class FileUpload {
         Connection conn;
         PreparedStatement ps;
 
+
+        // You'll notice the Base64InputStream here.  I had a requirement in another project to store the data in Base64.  I wanted to use the Base64InputStream class to prove that out.
         try {
             Base64InputStream base64InputStream = new Base64InputStream(attachment.getDataHandler().getInputStream(), true, 0, null);
             String fileName = attachment.getDataHandler().getName();
             conn = dataSource.getConnection();
-            ps = conn.prepareStatement("INSERT INTO FILE_TABLE (FILE_NAME, FILE_DATA) VALUES (?,?)");
+            ps = conn.prepareStatement(INSERT);
             ps.setString(1, fileName);
             ps.setBinaryStream(2, base64InputStream);
             ps.execute();
