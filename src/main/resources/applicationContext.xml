@@ -11,20 +11,4 @@
         </jaxrs:serviceBeans>
     </jaxrs:server>
 
-    <bean id="poolingDataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
-        <property name="url" value="jdbc:mysql://localhost:3306/fileupload"/>
-        <property name="username" value="fileup"/>
-        <property name="password" value="fileup"/>
-    </bean>
-
-    <bean id="fileUpload" class="org.dmhweb.controller.FileUpload">
-        <property name="dataSource" ref="poolingDataSource"/>
-    </bean>
-
-    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-        <property name="dataSource" ref="poolingDataSource"/>
-    </bean>
-
-    <tx:annotation-driven transaction-manager="txManager"/>
 </beans>
