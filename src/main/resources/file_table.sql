@@ -8,4 +8,4 @@ CREATE TABLE IF NOT EXISTS `file_table` (
   `file_name` varchar(255) NOT NULL,
   `file_data` longblob NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=utf8 AUTO_INCREMENT=8 ;
+) ;
