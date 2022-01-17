@@ -1,4 +1,4 @@
-package org.dmhweb.controller;
+package com.halversondm.fileupload.controller;
 
 import org.apache.commons.codec.binary.Base64InputStream;
 import org.apache.logging.log4j.LogManager;
@@ -6,6 +6,7 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -19,6 +20,7 @@ import java.sql.PreparedStatement;
  */
 @RestController
 @Transactional
+@RequestMapping("/rest")
 public class FileUpload {
 
     private static final Logger LOGGER = LogManager.getLogger(FileUpload.class);
@@ -27,7 +29,7 @@ public class FileUpload {
     @Autowired
     private DataSource dataSource;
 
-    @PostMapping(path = "fileUpload", consumes = "multipart/form-data")
+    @PostMapping(path = "/fileUpload", consumes = "multipart/form-data")
     public String uploadFile(@RequestParam(value = "file") MultipartFile attachment) {
         long startTime = System.currentTimeMillis();
         long endTime;

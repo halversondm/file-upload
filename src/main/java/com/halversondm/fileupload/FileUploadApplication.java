@@ -1,4 +1,4 @@
-package org.dmhweb;
+package com.halversondm.fileupload;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
